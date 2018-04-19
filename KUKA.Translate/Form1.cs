@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Google.Cloud.Translation.V2;
+using System;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Google.Cloud.Translation.V2;
 
 namespace KUKA.Translate
 {
     public partial class Form1 : Form
     {
         String inputFilename;
-        String inputFileSize;
         String delimiter;
+
+        // options
+        bool KeepOriginalComment = false;
+        bool OverwriteOriginalFile = false;
 
         public Form1()
         {
@@ -33,9 +31,16 @@ namespace KUKA.Translate
 
         }
 
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        private void OptionKeepOriginalComment_CheckedChanged(object sender, EventArgs e)
         {
+            KeepOriginalComment = OptionKeepOriginalComment.Checked;
+            Console.WriteLine("Option: KeepOriginalComment = " + KeepOriginalComment);
+        }
 
+        private void OptionOverwriteOriginalFile_CheckedChanged(object sender, EventArgs e)
+        {
+            OverwriteOriginalFile = OptionOverwriteOriginalFile.Checked;
+            Console.WriteLine("Option: OverwriteOriginalFile = " + OverwriteOriginalFile);
         }
 
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
@@ -71,7 +76,8 @@ namespace KUKA.Translate
             {
                 inputFilename = openFileDialog1.FileName;
                 textBox1.Text = inputFilename;
-                textBox2.Text = File.ReadAllText(inputFilename); // show file in preview window
+                LabelFilename.Text = "Filename: " + openFileDialog1.SafeFileName;
+                richTextBoxPreview.Text = File.ReadAllText(inputFilename); // show file in preview window
                 LabelFileSizeUpdate.Text = new FileInfo(inputFilename).Length.ToString() + " b";
                 labelFileSize.Text = "Size";
             }
@@ -80,27 +86,52 @@ namespace KUKA.Translate
 
         private void buttonTranslate_Click(object sender, EventArgs e)
         {
-            
-
             StreamReader reader = File.OpenText(inputFilename);
             string line;
+            richTextBoxPreview.Text = "";
 
             while ((line = reader.ReadLine()) != null)
             {                
                 if (line.Contains(";")) // if the line contains a comment
                 {
                     string[] items = line.Split(';');
-                    Console.WriteLine(items[1]);
+                    string translated = translate(items[1]);
+
+                    richTextBoxPreview.AppendText(items[0]);
+
+                    if (KeepOriginalComment)
+                    {
+                        richTextBoxPreview.AppendText("; " + items[1]);
+                        richTextBoxPreview.SelectionBackColor = Color.Gold;
+                        richTextBoxPreview.AppendText(" -> " +translated);
+                    }
+                    else
+                    {
+                        richTextBoxPreview.SelectionBackColor = Color.Gold;
+                        richTextBoxPreview.AppendText("; " + translated);
+                    }
+                    Console.WriteLine(items[1]+ " -> " +  translated );
                 }
-            }
-            
+                else
+                {
+                    richTextBoxPreview.AppendText(line); // default statement for non commented lines
+                }
+                richTextBoxPreview.AppendText("\r\n");  // insert newline
+            }            
         }
 
+        // returns a translated string
         private String translate(String input)
         {
             // google translate API key
-            string googleApiKey = "AIzaSyDzi81Uoe7nvalfTOTwfyWsgYHKXvUOW6M";
-            return "";
+            string credential_path = @"C:\Users\tomevo\Source\Repos\Translate\KUKA.Translate\googleApplicationCredentials.json";
+            System.Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", credential_path);
+
+            TranslationClient client = TranslationClient.Create();
+            TranslationResult result = client.TranslateText(input, LanguageCodes.English, LanguageCodes.German);
+            // Console.WriteLine($"Result: {result.TranslatedText}; detected language {result.DetectedSourceLanguage}");
+
+            return result.TranslatedText;
         }
 
         private void label1_Click_1(object sender, EventArgs e)
@@ -138,5 +169,7 @@ namespace KUKA.Translate
             delimiter = TextBoxDelimiter.Text;
             Console.WriteLine("Delimiter changed to: "+delimiter);
         }
+
+
     }
 }
