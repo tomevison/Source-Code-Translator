@@ -33,6 +33,7 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.LabelFileSizeUpdate = new System.Windows.Forms.Label();
             this.labelFileSize = new System.Windows.Forms.Label();
             this.ButtonBrowse = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -41,8 +42,9 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.LabelFileSizeUpdate = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.TextBoxDelimiter = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.checkBoxOverwriteOriginal = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -95,6 +97,15 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Source File";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // LabelFileSizeUpdate
+            // 
+            this.LabelFileSizeUpdate.AutoSize = true;
+            this.LabelFileSizeUpdate.Location = new System.Drawing.Point(39, 42);
+            this.LabelFileSizeUpdate.Name = "LabelFileSizeUpdate";
+            this.LabelFileSizeUpdate.Size = new System.Drawing.Size(0, 13);
+            this.LabelFileSizeUpdate.TabIndex = 9;
+            this.LabelFileSizeUpdate.Click += new System.EventHandler(this.label1_Click_2);
             // 
             // labelFileSize
             // 
@@ -169,17 +180,10 @@
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk);
             // 
-            // LabelFileSizeUpdate
-            // 
-            this.LabelFileSizeUpdate.AutoSize = true;
-            this.LabelFileSizeUpdate.Location = new System.Drawing.Point(39, 42);
-            this.LabelFileSizeUpdate.Name = "LabelFileSizeUpdate";
-            this.LabelFileSizeUpdate.Size = new System.Drawing.Size(0, 13);
-            this.LabelFileSizeUpdate.TabIndex = 9;
-            this.LabelFileSizeUpdate.Click += new System.EventHandler(this.label1_Click_2);
-            // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.TextBoxDelimiter);
+            this.groupBox3.Controls.Add(this.label1);
             this.groupBox3.Controls.Add(this.checkBoxOverwriteOriginal);
             this.groupBox3.Controls.Add(this.checkBox1);
             this.groupBox3.Location = new System.Drawing.Point(13, 145);
@@ -189,6 +193,25 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Options";
             this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
+            // 
+            // TextBoxDelimiter
+            // 
+            this.TextBoxDelimiter.Location = new System.Drawing.Point(94, 64);
+            this.TextBoxDelimiter.Name = "TextBoxDelimiter";
+            this.TextBoxDelimiter.Size = new System.Drawing.Size(45, 20);
+            this.TextBoxDelimiter.TabIndex = 8;
+            this.TextBoxDelimiter.Text = ";";
+            this.TextBoxDelimiter.TextChanged += new System.EventHandler(this.TextBoxDelimiter_TextChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(7, 67);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(81, 13);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Delimiting value";
+            this.label1.MouseHover += new System.EventHandler(this.label1_MouseHover);
             // 
             // checkBoxOverwriteOriginal
             // 
@@ -245,6 +268,8 @@
         private System.Windows.Forms.Label LabelFileSizeUpdate;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.CheckBox checkBoxOverwriteOriginal;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox TextBoxDelimiter;
     }
 }
 

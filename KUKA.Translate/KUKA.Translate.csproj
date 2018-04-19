@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Google.Cloud.Translation.V2">
+      <HintPath>..\..\..\..\KUKA\2. Projects\KUKA.Translate\google-cloud-dotnet-master\apis\Google.Cloud.Translation.V2\Google.Cloud.Translation.V2\bin\Debug\net45\Google.Cloud.Translation.V2.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

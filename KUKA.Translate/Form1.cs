@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Google.Cloud.Translation.V2;
 
 namespace KUKA.Translate
 {
@@ -15,6 +16,7 @@ namespace KUKA.Translate
     {
         String inputFilename;
         String inputFileSize;
+        String delimiter;
 
         public Form1()
         {
@@ -119,6 +121,22 @@ namespace KUKA.Translate
         private void groupBox3_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void label1_Click_3(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_MouseHover(object sender, EventArgs e)
+        {
+            // todo information msg on hover
+        }
+
+        private void TextBoxDelimiter_TextChanged(object sender, EventArgs e)
+        {
+            delimiter = TextBoxDelimiter.Text;
+            Console.WriteLine("Delimiter changed to: "+delimiter);
         }
     }
 }
