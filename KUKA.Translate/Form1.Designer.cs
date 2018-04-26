@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,6 +48,7 @@
             this.TextBoxDelimiter = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.OptionOverwriteOriginalFile = new System.Windows.Forms.CheckBox();
+            this.ToolTipKeepOriginalText = new System.Windows.Forms.ToolTip(this.components);
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -178,12 +180,13 @@
             // 
             // richTextBoxPreview
             // 
-            this.richTextBoxPreview.Location = new System.Drawing.Point(6, 21);
+            this.richTextBoxPreview.EnableAutoDragDrop = true;
+            this.richTextBoxPreview.Location = new System.Drawing.Point(12, 19);
             this.richTextBoxPreview.Name = "richTextBoxPreview";
-            this.richTextBoxPreview.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.richTextBoxPreview.Size = new System.Drawing.Size(413, 384);
+            this.richTextBoxPreview.Size = new System.Drawing.Size(407, 386);
             this.richTextBoxPreview.TabIndex = 1;
             this.richTextBoxPreview.Text = "";
+            this.richTextBoxPreview.WordWrap = false;
             // 
             // openFileDialog1
             // 
@@ -234,6 +237,10 @@
             this.OptionOverwriteOriginalFile.UseVisualStyleBackColor = true;
             this.OptionOverwriteOriginalFile.CheckedChanged += new System.EventHandler(this.OptionOverwriteOriginalFile_CheckedChanged);
             // 
+            // ToolTipKeepOriginalText
+            // 
+            this.ToolTipKeepOriginalText.Popup += new System.Windows.Forms.PopupEventHandler(this.ToolTipKeepOriginalText_Popup);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -281,6 +288,7 @@
         private System.Windows.Forms.TextBox TextBoxDelimiter;
         private System.Windows.Forms.RichTextBox richTextBoxPreview;
         private System.Windows.Forms.Label LabelFilename;
+        private System.Windows.Forms.ToolTip ToolTipKeepOriginalText;
     }
 }
 

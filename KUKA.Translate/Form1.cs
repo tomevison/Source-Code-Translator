@@ -10,7 +10,7 @@ namespace KUKA.Translate
     public partial class Form1 : Form
     {
         String inputFilename;
-        String delimiter;
+        String delimiter = ";";
 
         // options
         bool KeepOriginalComment = false;
@@ -19,6 +19,7 @@ namespace KUKA.Translate
         public Form1()
         {
             InitializeComponent();
+            labelFileSize.Text = "Size: ";
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -86,16 +87,24 @@ namespace KUKA.Translate
 
         private void buttonTranslate_Click(object sender, EventArgs e)
         {
+
+            richTextBoxPreview.Text = "";  // clear preview textbox
+            translate();
+            // System.Threading.Thread newThread = new System.Threading.Thread(translate);
+            // newThread.Start();
+        }
+
+        // parse doccument and translate
+        private void translate()
+        {
             StreamReader reader = File.OpenText(inputFilename);
             string line;
-            richTextBoxPreview.Text = "";
-
             while ((line = reader.ReadLine()) != null)
-            {                
-                if (line.Contains(";")) // if the line contains a comment
+            {
+                if (line.Contains(delimiter)) // if the line contains a comment
                 {
-                    string[] items = line.Split(';');
-                    string translated = translate(items[1]);
+                    string[] items = line.Split(';');                          // split instruction using the delimiting character
+                    string translated = googleTranslate(items[1]);
 
                     richTextBoxPreview.AppendText(items[0]);
 
@@ -103,28 +112,28 @@ namespace KUKA.Translate
                     {
                         richTextBoxPreview.AppendText("; " + items[1]);
                         richTextBoxPreview.SelectionBackColor = Color.Gold;
-                        richTextBoxPreview.AppendText(" -> " +translated);
+                        richTextBoxPreview.AppendText(" -> " + translated);
                     }
                     else
                     {
                         richTextBoxPreview.SelectionBackColor = Color.Gold;
                         richTextBoxPreview.AppendText("; " + translated);
                     }
-                    Console.WriteLine(items[1]+ " -> " +  translated );
+                    Console.WriteLine(items[1] + " -> " + translated);
                 }
                 else
                 {
                     richTextBoxPreview.AppendText(line); // default statement for non commented lines
                 }
                 richTextBoxPreview.AppendText("\r\n");  // insert newline
-            }            
+            }
         }
 
         // returns a translated string
-        private String translate(String input)
+        private String googleTranslate(String input)
         {
             // google translate API key
-            string credential_path = @"C:\Users\tomevo\Source\Repos\Translate\KUKA.Translate\googleApplicationCredentials.json";
+            string credential_path = @"C:\Users\evison\source\repos\KUKA.Translate\KUKA.Translate\googleApplicationCredentials.json";
             System.Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", credential_path);
 
             TranslationClient client = TranslationClient.Create();
@@ -162,6 +171,7 @@ namespace KUKA.Translate
         private void label1_MouseHover(object sender, EventArgs e)
         {
             // todo information msg on hover
+            
         }
 
         private void TextBoxDelimiter_TextChanged(object sender, EventArgs e)
@@ -170,6 +180,10 @@ namespace KUKA.Translate
             Console.WriteLine("Delimiter changed to: "+delimiter);
         }
 
+        private void ToolTipKeepOriginalText_Popup(object sender, PopupEventArgs e)
+        {
+
+        }
 
     }
 }
