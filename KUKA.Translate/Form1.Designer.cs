@@ -28,14 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.LabelFileNameUpdate = new System.Windows.Forms.Label();
+            this.labelFileSize = new System.Windows.Forms.Label();
             this.LabelFilename = new System.Windows.Forms.Label();
             this.LabelFileSizeUpdate = new System.Windows.Forms.Label();
-            this.labelFileSize = new System.Windows.Forms.Label();
             this.ButtonBrowse = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.OptionKeepOriginalComment = new System.Windows.Forms.CheckBox();
@@ -45,12 +47,21 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.TextBoxDelimiter = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.LabelDelimValue = new System.Windows.Forms.Label();
             this.OptionOverwriteOriginalFile = new System.Windows.Forms.CheckBox();
+            this.TooltipKeepOriginalComment = new System.Windows.Forms.ToolTip(this.components);
+            this.tooltipOverwriteOriginalFile = new System.Windows.Forms.ToolTip(this.components);
+            this.Output = new System.Windows.Forms.GroupBox();
+            this.ButtonSave = new System.Windows.Forms.Button();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.TranslationBackgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.LabelExtension = new System.Windows.Forms.Label();
+            this.LabelExtensionUpdate = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.Output.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -63,6 +74,7 @@
             this.menuStrip1.Size = new System.Drawing.Size(800, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // toolStripMenuItem1
             // 
@@ -81,15 +93,18 @@
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(107, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem2.Text = "About";
             this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.LabelExtensionUpdate);
+            this.groupBox1.Controls.Add(this.LabelExtension);
+            this.groupBox1.Controls.Add(this.LabelFileNameUpdate);
+            this.groupBox1.Controls.Add(this.labelFileSize);
             this.groupBox1.Controls.Add(this.LabelFilename);
             this.groupBox1.Controls.Add(this.LabelFileSizeUpdate);
-            this.groupBox1.Controls.Add(this.labelFileSize);
             this.groupBox1.Controls.Add(this.ButtonBrowse);
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Location = new System.Drawing.Point(12, 27);
@@ -98,34 +113,43 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Source File";
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
-            // LabelFilename
+            // LabelFileNameUpdate
             // 
-            this.LabelFilename.AutoSize = true;
-            this.LabelFilename.Location = new System.Drawing.Point(6, 59);
-            this.LabelFilename.Name = "LabelFilename";
-            this.LabelFilename.Size = new System.Drawing.Size(49, 13);
-            this.LabelFilename.TabIndex = 10;
-            this.LabelFilename.Text = "Filename";
-            // 
-            // LabelFileSizeUpdate
-            // 
-            this.LabelFileSizeUpdate.AutoSize = true;
-            this.LabelFileSizeUpdate.Location = new System.Drawing.Point(39, 42);
-            this.LabelFileSizeUpdate.Name = "LabelFileSizeUpdate";
-            this.LabelFileSizeUpdate.Size = new System.Drawing.Size(0, 13);
-            this.LabelFileSizeUpdate.TabIndex = 9;
-            this.LabelFileSizeUpdate.Click += new System.EventHandler(this.label1_Click_2);
+            this.LabelFileNameUpdate.AutoSize = true;
+            this.LabelFileNameUpdate.Location = new System.Drawing.Point(61, 59);
+            this.LabelFileNameUpdate.Name = "LabelFileNameUpdate";
+            this.LabelFileNameUpdate.Size = new System.Drawing.Size(49, 13);
+            this.LabelFileNameUpdate.TabIndex = 11;
+            this.LabelFileNameUpdate.Text = "Filename";
+            this.LabelFileNameUpdate.Click += new System.EventHandler(this.LabelFileNameUpdate_Click);
             // 
             // labelFileSize
             // 
             this.labelFileSize.AutoSize = true;
             this.labelFileSize.Location = new System.Drawing.Point(6, 42);
             this.labelFileSize.Name = "labelFileSize";
-            this.labelFileSize.Size = new System.Drawing.Size(0, 13);
+            this.labelFileSize.Size = new System.Drawing.Size(30, 13);
             this.labelFileSize.TabIndex = 8;
-            this.labelFileSize.Click += new System.EventHandler(this.label1_Click_1);
+            this.labelFileSize.Text = "Size:";
+            // 
+            // LabelFilename
+            // 
+            this.LabelFilename.AutoSize = true;
+            this.LabelFilename.Location = new System.Drawing.Point(6, 59);
+            this.LabelFilename.Name = "LabelFilename";
+            this.LabelFilename.Size = new System.Drawing.Size(52, 13);
+            this.LabelFilename.TabIndex = 10;
+            this.LabelFilename.Text = "Filename:";
+            // 
+            // LabelFileSizeUpdate
+            // 
+            this.LabelFileSizeUpdate.AutoSize = true;
+            this.LabelFileSizeUpdate.Location = new System.Drawing.Point(61, 42);
+            this.LabelFileSizeUpdate.Name = "LabelFileSizeUpdate";
+            this.LabelFileSizeUpdate.Size = new System.Drawing.Size(28, 13);
+            this.LabelFileSizeUpdate.TabIndex = 9;
+            this.LabelFileSizeUpdate.Text = "0 kb";
             // 
             // ButtonBrowse
             // 
@@ -143,24 +167,25 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(250, 20);
             this.textBox1.TabIndex = 6;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // OptionKeepOriginalComment
             // 
             this.OptionKeepOriginalComment.AutoSize = true;
             this.OptionKeepOriginalComment.Location = new System.Drawing.Point(8, 19);
             this.OptionKeepOriginalComment.Name = "OptionKeepOriginalComment";
-            this.OptionKeepOriginalComment.Size = new System.Drawing.Size(111, 17);
+            this.OptionKeepOriginalComment.Size = new System.Drawing.Size(134, 17);
             this.OptionKeepOriginalComment.TabIndex = 5;
-            this.OptionKeepOriginalComment.Text = "Keep original Text";
+            this.OptionKeepOriginalComment.Text = "Keep original Comment";
+            this.TooltipKeepOriginalComment.SetToolTip(this.OptionKeepOriginalComment, "Keeps the original comment in the output text file.\r\nUnchecked:\r\n    stop()   ; W" +
+        "arning\r\nChecked:\r\n    stop()   : Achtung -> Warning");
             this.OptionKeepOriginalComment.UseVisualStyleBackColor = true;
             this.OptionKeepOriginalComment.CheckedChanged += new System.EventHandler(this.OptionKeepOriginalComment_CheckedChanged);
             // 
             // buttonTranslate
             // 
-            this.buttonTranslate.Location = new System.Drawing.Point(258, 401);
+            this.buttonTranslate.Location = new System.Drawing.Point(261, 132);
             this.buttonTranslate.Name = "buttonTranslate";
-            this.buttonTranslate.Size = new System.Drawing.Size(99, 37);
+            this.buttonTranslate.Size = new System.Drawing.Size(77, 22);
             this.buttonTranslate.TabIndex = 2;
             this.buttonTranslate.Text = "Translate";
             this.buttonTranslate.UseVisualStyleBackColor = true;
@@ -193,16 +218,16 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.TextBoxDelimiter);
-            this.groupBox3.Controls.Add(this.label1);
+            this.groupBox3.Controls.Add(this.LabelDelimValue);
             this.groupBox3.Controls.Add(this.OptionOverwriteOriginalFile);
+            this.groupBox3.Controls.Add(this.buttonTranslate);
             this.groupBox3.Controls.Add(this.OptionKeepOriginalComment);
             this.groupBox3.Location = new System.Drawing.Point(13, 145);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(344, 119);
+            this.groupBox3.Size = new System.Drawing.Size(344, 160);
             this.groupBox3.TabIndex = 6;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Options";
-            this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
             // 
             // TextBoxDelimiter
             // 
@@ -213,15 +238,15 @@
             this.TextBoxDelimiter.Text = ";";
             this.TextBoxDelimiter.TextChanged += new System.EventHandler(this.TextBoxDelimiter_TextChanged);
             // 
-            // label1
+            // LabelDelimValue
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 67);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(81, 13);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Delimiting value";
-            this.label1.MouseHover += new System.EventHandler(this.label1_MouseHover);
+            this.LabelDelimValue.AutoSize = true;
+            this.LabelDelimValue.Location = new System.Drawing.Point(7, 67);
+            this.LabelDelimValue.Name = "LabelDelimValue";
+            this.LabelDelimValue.Size = new System.Drawing.Size(81, 13);
+            this.LabelDelimValue.TabIndex = 7;
+            this.LabelDelimValue.Text = "Delimiting value";
+            this.TooltipKeepOriginalComment.SetToolTip(this.LabelDelimValue, "Value that indicates a comment:\r\nKRL          ;  comment\r\nC#, Java // comment");
             // 
             // OptionOverwriteOriginalFile
             // 
@@ -231,19 +256,67 @@
             this.OptionOverwriteOriginalFile.Size = new System.Drawing.Size(128, 17);
             this.OptionOverwriteOriginalFile.TabIndex = 6;
             this.OptionOverwriteOriginalFile.Text = "Overwrite Original File";
+            this.tooltipOverwriteOriginalFile.SetToolTip(this.OptionOverwriteOriginalFile, "Save your translated file with the same filename as original");
             this.OptionOverwriteOriginalFile.UseVisualStyleBackColor = true;
             this.OptionOverwriteOriginalFile.CheckedChanged += new System.EventHandler(this.OptionOverwriteOriginalFile_CheckedChanged);
+            // 
+            // Output
+            // 
+            this.Output.Controls.Add(this.ButtonSave);
+            this.Output.Location = new System.Drawing.Point(13, 311);
+            this.Output.Name = "Output";
+            this.Output.Size = new System.Drawing.Size(344, 127);
+            this.Output.TabIndex = 7;
+            this.Output.TabStop = false;
+            this.Output.Text = "Output";
+            // 
+            // ButtonSave
+            // 
+            this.ButtonSave.Location = new System.Drawing.Point(261, 98);
+            this.ButtonSave.Name = "ButtonSave";
+            this.ButtonSave.Size = new System.Drawing.Size(75, 23);
+            this.ButtonSave.TabIndex = 0;
+            this.ButtonSave.Text = "Save";
+            this.ButtonSave.UseVisualStyleBackColor = true;
+            this.ButtonSave.Click += new System.EventHandler(this.ButtonSave_Click);
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
+            // 
+            // TranslationBackgroundWorker
+            // 
+            this.TranslationBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.TranslationBackgroundWorker_DoWork);
+            // 
+            // LabelExtension
+            // 
+            this.LabelExtension.AutoSize = true;
+            this.LabelExtension.Location = new System.Drawing.Point(6, 76);
+            this.LabelExtension.Name = "LabelExtension";
+            this.LabelExtension.Size = new System.Drawing.Size(59, 13);
+            this.LabelExtension.TabIndex = 12;
+            this.LabelExtension.Text = "Extension: ";
+            // 
+            // LabelExtensionUpdate
+            // 
+            this.LabelExtensionUpdate.AutoSize = true;
+            this.LabelExtensionUpdate.Enabled = false;
+            this.LabelExtensionUpdate.Location = new System.Drawing.Point(61, 76);
+            this.LabelExtensionUpdate.Name = "LabelExtensionUpdate";
+            this.LabelExtensionUpdate.Size = new System.Drawing.Size(53, 13);
+            this.LabelExtensionUpdate.TabIndex = 13;
+            this.LabelExtensionUpdate.Text = "Extension";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.Output);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.menuStrip1);
-            this.Controls.Add(this.buttonTranslate);
+            this.Controls.Add(this.groupBox1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "KUKA.Translate";
@@ -255,6 +328,7 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.Output.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -277,10 +351,19 @@
         private System.Windows.Forms.Label LabelFileSizeUpdate;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.CheckBox OptionOverwriteOriginalFile;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label LabelDelimValue;
         private System.Windows.Forms.TextBox TextBoxDelimiter;
         private System.Windows.Forms.RichTextBox richTextBoxPreview;
         private System.Windows.Forms.Label LabelFilename;
+        private System.Windows.Forms.Label LabelFileNameUpdate;
+        private System.Windows.Forms.ToolTip TooltipKeepOriginalComment;
+        private System.Windows.Forms.ToolTip tooltipOverwriteOriginalFile;
+        private System.Windows.Forms.GroupBox Output;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.Button ButtonSave;
+        private System.ComponentModel.BackgroundWorker TranslationBackgroundWorker;
+        private System.Windows.Forms.Label LabelExtension;
+        private System.Windows.Forms.Label LabelExtensionUpdate;
     }
 }
 
