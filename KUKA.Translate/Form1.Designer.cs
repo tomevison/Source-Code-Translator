@@ -34,6 +34,8 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.LabelExtensionUpdate = new System.Windows.Forms.Label();
+            this.LabelExtension = new System.Windows.Forms.Label();
             this.LabelFileNameUpdate = new System.Windows.Forms.Label();
             this.labelFileSize = new System.Windows.Forms.Label();
             this.LabelFilename = new System.Windows.Forms.Label();
@@ -55,8 +57,6 @@
             this.ButtonSave = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.TranslationBackgroundWorker = new System.ComponentModel.BackgroundWorker();
-            this.LabelExtension = new System.Windows.Forms.Label();
-            this.LabelExtensionUpdate = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -93,7 +93,7 @@
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(107, 22);
             this.toolStripMenuItem2.Text = "About";
             this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
@@ -114,6 +114,25 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Source File";
             // 
+            // LabelExtensionUpdate
+            // 
+            this.LabelExtensionUpdate.AutoSize = true;
+            this.LabelExtensionUpdate.Enabled = false;
+            this.LabelExtensionUpdate.Location = new System.Drawing.Point(61, 76);
+            this.LabelExtensionUpdate.Name = "LabelExtensionUpdate";
+            this.LabelExtensionUpdate.Size = new System.Drawing.Size(53, 13);
+            this.LabelExtensionUpdate.TabIndex = 13;
+            this.LabelExtensionUpdate.Text = "Extension";
+            // 
+            // LabelExtension
+            // 
+            this.LabelExtension.AutoSize = true;
+            this.LabelExtension.Location = new System.Drawing.Point(6, 76);
+            this.LabelExtension.Name = "LabelExtension";
+            this.LabelExtension.Size = new System.Drawing.Size(59, 13);
+            this.LabelExtension.TabIndex = 12;
+            this.LabelExtension.Text = "Extension: ";
+            // 
             // LabelFileNameUpdate
             // 
             this.LabelFileNameUpdate.AutoSize = true;
@@ -122,7 +141,6 @@
             this.LabelFileNameUpdate.Size = new System.Drawing.Size(49, 13);
             this.LabelFileNameUpdate.TabIndex = 11;
             this.LabelFileNameUpdate.Text = "Filename";
-            this.LabelFileNameUpdate.Click += new System.EventHandler(this.LabelFileNameUpdate_Click);
             // 
             // labelFileSize
             // 
@@ -287,25 +305,6 @@
             // TranslationBackgroundWorker
             // 
             this.TranslationBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.TranslationBackgroundWorker_DoWork);
-            // 
-            // LabelExtension
-            // 
-            this.LabelExtension.AutoSize = true;
-            this.LabelExtension.Location = new System.Drawing.Point(6, 76);
-            this.LabelExtension.Name = "LabelExtension";
-            this.LabelExtension.Size = new System.Drawing.Size(59, 13);
-            this.LabelExtension.TabIndex = 12;
-            this.LabelExtension.Text = "Extension: ";
-            // 
-            // LabelExtensionUpdate
-            // 
-            this.LabelExtensionUpdate.AutoSize = true;
-            this.LabelExtensionUpdate.Enabled = false;
-            this.LabelExtensionUpdate.Location = new System.Drawing.Point(61, 76);
-            this.LabelExtensionUpdate.Name = "LabelExtensionUpdate";
-            this.LabelExtensionUpdate.Size = new System.Drawing.Size(53, 13);
-            this.LabelExtensionUpdate.TabIndex = 13;
-            this.LabelExtensionUpdate.Text = "Extension";
             // 
             // Form1
             // 

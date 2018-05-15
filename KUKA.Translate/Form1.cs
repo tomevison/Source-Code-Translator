@@ -9,7 +9,9 @@ namespace KUKA.Translate
 {
     public partial class Form1 : Form
     {
-        String inputFilename;
+        String inputFilePath;
+        String inputFileName;
+        String inputFileExtension;
         String delimiter;
         static String previewTextField;
 
@@ -64,25 +66,27 @@ namespace KUKA.Translate
             DialogResult result = openFileDialog1.ShowDialog();
             if (result == DialogResult.OK)// Test result.
             {
-                inputFilename = openFileDialog1.FileName;
-                textBox1.Text = inputFilename;
+                inputFilePath = openFileDialog1.FileName;
+                inputFileName = openFileDialog1.SafeFileName;
+                textBox1.Text = inputFilePath;
 
                 // update file size and info
                 LabelFilename.Text = "Filename: ";
                 LabelFileNameUpdate.Text = openFileDialog1.SafeFileName;
                 labelFileSize.Text = "Size: ";
-                LabelFileSizeUpdate.Text = new FileInfo(inputFilename).Length.ToString() + " b";
-
+                LabelFileSizeUpdate.Text = new FileInfo(inputFilePath).Length.ToString() + " b";
+                inputFileExtension = Path.GetExtension(openFileDialog1.FileName);
+                LabelExtensionUpdate.Text = inputFileExtension; 
                 // show file in preview window
-                richTextBoxPreview.Text = File.ReadAllText(inputFilename);
+                richTextBoxPreview.Text = File.ReadAllText(inputFilePath);
             }
-            Console.WriteLine("input file name: " + inputFilename); // <-- For debugging use.
+            Console.WriteLine("input file name: " + inputFilePath); // <-- For debugging use.
         }
 
         private void buttonTranslate_Click(object sender, EventArgs e)
         {
             Console.WriteLine("Translating...");
-            StreamReader reader = File.OpenText(inputFilename);
+            StreamReader reader = File.OpenText(inputFilePath);
             string line;
             richTextBoxPreview.Text = "";
 
@@ -149,6 +153,8 @@ namespace KUKA.Translate
         private void ButtonSave_Click(object sender, EventArgs e)
         {
             saveFileDialog1.Title = "Save your translated File";
+            saveFileDialog1.Filter = " "+inputFileExtension+"|*"+inputFileExtension+"|Data Files (*.dat)|*.dat| Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            saveFileDialog1.FileName = inputFileName; ;
             saveFileDialog1.ShowDialog();
             SaveTranslatedFile();
         }
@@ -160,6 +166,7 @@ namespace KUKA.Translate
             
         }
 
+        // user can save their outputted file
         private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
             // get file name
@@ -185,11 +192,6 @@ namespace KUKA.Translate
         }
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
-        private void LabelFileNameUpdate_Click(object sender, EventArgs e)
         {
 
         }
