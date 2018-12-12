@@ -3,6 +3,8 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace KUKA.Translate
@@ -12,8 +14,10 @@ namespace KUKA.Translate
         String inputFilePath;
         String inputFileName;
         String inputFileExtension;
-        String delimiter;
+        char delimiter = ';';
         static String previewTextField;
+        String inputLanguage = "German";
+        String outputLanguage = "Englinsh";
 
         BackgroundWorker worker = new BackgroundWorker();
 
@@ -25,9 +29,6 @@ namespace KUKA.Translate
         {
             InitializeComponent();
 
-            // google translate API key
-            string credential_path = @"C:\Users\tomevo\Source\Repos\Translate\KUKA.Translate\googleApplicationCredentials.json";
-            System.Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", credential_path);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -93,7 +94,6 @@ namespace KUKA.Translate
             while ((line = reader.ReadLine()) != null)
             {
                 ParseLine(line);
-
             }
             Console.WriteLine("Translation complete..");
         }
@@ -102,9 +102,9 @@ namespace KUKA.Translate
         {
             String output = "output";
 
-            if (input.Contains(";")) // if the line contains a comment
+            if (input.Contains(delimiter.ToString())) // if the line contains a comment
             {
-                string[] items = input.Split(';');
+                string[] items = input.Split(delimiter);
                 richTextBoxPreview.AppendText(items[0]);
 
                 string translated = translate(items[1]);
@@ -114,14 +114,14 @@ namespace KUKA.Translate
 
                 if (KeepOriginalComment)
                 {
-                    richTextBoxPreview.AppendText("; " + items[1]);
+                    richTextBoxPreview.AppendText(delimiter + " " + items[1]);
                     richTextBoxPreview.SelectionBackColor = Color.Gold;
                     richTextBoxPreview.AppendText(" -> " + translated);
                 }
                 else
                 {
                     richTextBoxPreview.SelectionBackColor = Color.Gold;
-                    richTextBoxPreview.AppendText("; " + translated);
+                    richTextBoxPreview.AppendText(delimiter + " " + translated);
                 }
                 Console.WriteLine(items[1] + " -> " + translated);
             }
@@ -138,15 +138,39 @@ namespace KUKA.Translate
         private String translate(String input)
         {
 
-            TranslationClient client = TranslationClient.Create();
-            TranslationResult result = client.TranslateText(input, LanguageCodes.English, LanguageCodes.German);
+            TranslationModel model = TranslationModel.ServiceDefault;
+            var assembly = Assembly.GetExecutingAssembly();
+            StreamReader reader = new StreamReader(assembly.GetManifestResourceStream("KUKA.Translate.Files.apiKey.txt"));
+            String apiKey = reader.ReadToEnd();
+
+            TranslationClient client = TranslationClient.CreateFromApiKey(apiKey, model);
+            TranslationResult result = client.TranslateText(input, setLanguages(outputLanguage), setLanguages(inputLanguage));
 
             return result.TranslatedText;
         }
 
+        private string setLanguages(String language)
+        {
+            switch (language)
+            {
+                case "English":
+                    return LanguageCodes.English;
+                case "German":
+                    return LanguageCodes.German;
+                case "Spanish":
+                    return LanguageCodes.Spanish;
+                case "Italian":
+                    return LanguageCodes.Italian;
+                case "Turkish":
+                    return LanguageCodes.Turkish;
+                default:
+                    return LanguageCodes.English;
+            }
+        }
+
         private void TextBoxDelimiter_TextChanged(object sender, EventArgs e)
         {
-            delimiter = TextBoxDelimiter.Text;
+            delimiter = TextBoxDelimiter.Text[0]; // cast string to char
             Console.WriteLine("Delimiter changed to: "+delimiter);
         }
 
@@ -194,6 +218,19 @@ namespace KUKA.Translate
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
+        }
+
+
+        private void cb_inputLang_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            inputLanguage = cb_inputLang.Text;
+            Console.WriteLine("inputLanguage = " + inputLanguage);
+        }
+
+        private void cb_outputLang_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            outputLanguage = cb_outputLang.Text;
+            Console.WriteLine("outputLanguage = " + outputLanguage);
         }
     }
 }

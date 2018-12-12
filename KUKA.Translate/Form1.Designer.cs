@@ -48,6 +48,10 @@
             this.richTextBoxPreview = new System.Windows.Forms.RichTextBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.cb_outputLang = new System.Windows.Forms.ComboBox();
+            this.cb_inputLang = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lbl_inputLanguage = new System.Windows.Forms.Label();
             this.TextBoxDelimiter = new System.Windows.Forms.TextBox();
             this.LabelDelimValue = new System.Windows.Forms.Label();
             this.OptionOverwriteOriginalFile = new System.Windows.Forms.CheckBox();
@@ -235,6 +239,10 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.cb_outputLang);
+            this.groupBox3.Controls.Add(this.cb_inputLang);
+            this.groupBox3.Controls.Add(this.label1);
+            this.groupBox3.Controls.Add(this.lbl_inputLanguage);
             this.groupBox3.Controls.Add(this.TextBoxDelimiter);
             this.groupBox3.Controls.Add(this.LabelDelimValue);
             this.groupBox3.Controls.Add(this.OptionOverwriteOriginalFile);
@@ -247,11 +255,63 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Options";
             // 
+            // cb_outputLang
+            // 
+            this.cb_outputLang.FormattingEnabled = true;
+            this.cb_outputLang.Items.AddRange(new object[] {
+            "English",
+            "German",
+            "Spanish",
+            "Italian",
+            "Turkish"});
+            this.cb_outputLang.Location = new System.Drawing.Point(101, 117);
+            this.cb_outputLang.Name = "cb_outputLang";
+            this.cb_outputLang.Size = new System.Drawing.Size(121, 21);
+            this.cb_outputLang.TabIndex = 14;
+            this.cb_outputLang.Text = "English";
+            this.cb_outputLang.SelectedIndexChanged += new System.EventHandler(this.cb_outputLang_SelectedIndexChanged);
+            // 
+            // cb_inputLang
+            // 
+            this.cb_inputLang.FormattingEnabled = true;
+            this.cb_inputLang.Items.AddRange(new object[] {
+            "English",
+            "German",
+            "Spanish",
+            "Italian",
+            "Turkish"});
+            this.cb_inputLang.Location = new System.Drawing.Point(101, 90);
+            this.cb_inputLang.Name = "cb_inputLang";
+            this.cb_inputLang.Size = new System.Drawing.Size(121, 21);
+            this.cb_inputLang.TabIndex = 13;
+            this.cb_inputLang.Text = "German";
+            this.cb_inputLang.SelectedIndexChanged += new System.EventHandler(this.cb_inputLang_SelectedIndexChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(7, 120);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(90, 13);
+            this.label1.TabIndex = 12;
+            this.label1.Text = "Output Language";
+            this.TooltipKeepOriginalComment.SetToolTip(this.label1, "Value that indicates a comment:\r\nKRL          ;  comment\r\nC#, Java // comment");
+            // 
+            // lbl_inputLanguage
+            // 
+            this.lbl_inputLanguage.AutoSize = true;
+            this.lbl_inputLanguage.Location = new System.Drawing.Point(7, 93);
+            this.lbl_inputLanguage.Name = "lbl_inputLanguage";
+            this.lbl_inputLanguage.Size = new System.Drawing.Size(82, 13);
+            this.lbl_inputLanguage.TabIndex = 11;
+            this.lbl_inputLanguage.Text = "Input Language";
+            this.TooltipKeepOriginalComment.SetToolTip(this.lbl_inputLanguage, "Value that indicates a comment:\r\nKRL          ;  comment\r\nC#, Java // comment");
+            // 
             // TextBoxDelimiter
             // 
-            this.TextBoxDelimiter.Location = new System.Drawing.Point(94, 64);
+            this.TextBoxDelimiter.Location = new System.Drawing.Point(101, 64);
             this.TextBoxDelimiter.Name = "TextBoxDelimiter";
-            this.TextBoxDelimiter.Size = new System.Drawing.Size(45, 20);
+            this.TextBoxDelimiter.Size = new System.Drawing.Size(65, 20);
             this.TextBoxDelimiter.TabIndex = 8;
             this.TextBoxDelimiter.Text = ";";
             this.TextBoxDelimiter.TextChanged += new System.EventHandler(this.TextBoxDelimiter_TextChanged);
@@ -363,6 +423,10 @@
         private System.ComponentModel.BackgroundWorker TranslationBackgroundWorker;
         private System.Windows.Forms.Label LabelExtension;
         private System.Windows.Forms.Label LabelExtensionUpdate;
+        private System.Windows.Forms.Label lbl_inputLanguage;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cb_outputLang;
+        private System.Windows.Forms.ComboBox cb_inputLang;
     }
 }
 
